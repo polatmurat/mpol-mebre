@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Quiz</title>
+</head>
+<body>
+
+
+
+    <div class="h-screen flex justify-center items-center">
+
+        <div>
+            <h1 id="result"></h1>
+            <div id="questionContainer" questionNumber="0" class="w-[630px] h-[280px] border">
+                <p id="questionIndex" class="bg-red-500 w-[80px] text-center text-white font-semibold"></p>
+                <p id="questionText" class="m-5 mt-2"></p>
+                <ul class="text-left p-7 pt-0">
+                    <button id="choiceA" onclick="checkAnswer('A')" class="border text-left w-full px-5 py-2.5 mb-2 rounded cursor-pointer hover:bg-gray-200"></button>
+                    <button id="choiceB" onclick="checkAnswer('B')" class="border text-left w-full px-5 py-2.5 mb-2 rounded cursor-pointer hover:bg-gray-200"></button>
+                    <button id="choiceC" onclick="checkAnswer('C')" class="border text-left w-full px-5 py-2.5 mb-2 rounded cursor-pointer hover:bg-gray-200"></button>
+                </ul>
+            </div>
+            <div class="flex gap-5 justify-center mt-3">
+                <button id="previous" class="border px-4 py-1 cursor-pointer rounded-md" onclick="previousQuestion()"><</button>
+                <button id="next" class="border px-4 py-1 cursor-pointer rounded-md" onclick="nextQuestion()">></button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        
+
+    </script>
+
+</body>
+</html>
