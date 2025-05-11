@@ -45,11 +45,11 @@ const questions = [
     }
 ];
 
-
 const choiceA = document.querySelector("#choiceA");
 const choiceB = document.querySelector("#choiceB");
 const choiceC = document.querySelector("#choiceC");
 let points = 0;
+const answeredQIndexes = new Set();
 
 function loadQuestion(questionNumber = 0) {    
 
@@ -64,22 +64,26 @@ function loadQuestion(questionNumber = 0) {
 
     questionContainer.querySelector("#questionIndex").innerHTML = `Soru ${questions[questionNumber].id}`
     questionContainer.querySelector("#questionText").innerHTML = questions[questionNumber].questionText;
-    questionContainer.querySelector("#choiceA").innerHTML = "A) " + questions[questionNumber].choices.A;
-    questionContainer.querySelector("#choiceB").innerHTML = "B) " + questions[questionNumber].choices.B;
-    questionContainer.querySelector("#choiceC").innerHTML = "C) " + questions[questionNumber].choices.C;
+    choiceA.innerHTML = "A) " + questions[questionNumber].choices.A;
+    choiceB.innerHTML = "B) " + questions[questionNumber].choices.B;
+    choiceC.innerHTML = "C) " + questions[questionNumber].choices.C;
+
+    updateNavigationButtons()
 
 }
 
 function checkAnswer(choice) {
-    const questionNumber = document.querySelector("#questionContainer").getAttribute("questionNumber");
+    const questionNumber = parseInt(document.querySelector("#questionContainer").getAttribute("questionNumber"));
     const isCorrect = questions[questionNumber].answer === choice;
 
-    if(isCorrect) {
-        points += parseInt(questions[questionNumber].point);
+    if(!answeredQIndexes.has(questionNumber)) {
+        if(isCorrect) {
+            points += parseInt(questions[questionNumber].point);
+        }
+        answeredQIndexes.add(questionNumber);
+    } else {
+        console.log("Bu soru zaten cevaplanmıştı");
     }
-
-    console.log(points);
-    
 
     if(questionNumber == questions.length - 1) {
         document.querySelector("#result").innerHTML = "Tebrikler, quiz bitti. Güncel puanınız : " + `<span class='font-bold text-green-800'>${points}</span>`;
@@ -129,11 +133,33 @@ function checkAnswer(choice) {
         choiceB.classList.add("cursor-not-allowed!");
         choiceB.disabled = true;
     }
-    
 
-
+    // setTimeout(() => {
+    //     nextQuestion();
+    // }, 3000);
 }
 
+function updateNavigationButtons() {
+    const questionContainer = document.querySelector("#questionContainer");
+    const questionNumber = parseInt(questionContainer.getAttribute("questionNumber"));
+
+    if(questionNumber <= 0 || answeredQIndexes.has(questionNumber - 1)) {
+        document.querySelector("#previous").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#previous").disabled = true;
+    } else {
+        document.querySelector("#previous").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#previous").disabled = false;
+    }
+
+    if(questionNumber >= questions.length - 1) {
+        document.querySelector("#next").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#next").disabled = true;
+    } else {
+        document.querySelector("#next").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#next").disabled = false; 
+    }
+
+}
 
 function nextQuestion() {
 
@@ -146,36 +172,49 @@ function nextQuestion() {
     choiceC.disabled = false;
 
     const questionContainer = document.querySelector("#questionContainer");
-    const questionNumber = parseInt(questionContainer.getAttribute("questionNumber"));
+    const questionNumber = parseInt(questionContainer.getAttribute("questionNumber"));    
+
+    console.log(questionNumber);
+    console.log(answeredQIndexes);
+
+    if(questionNumber <= 1 || answeredQIndexes.has(questionNumber)) {            
+        document.querySelector("#previous").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#previous").disabled = true;        
+    } else {
+        document.querySelector("#previous").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#previous").disabled = false;        
+    }
+
     if(questionNumber < questions.length - 1) {
         questionContainer.setAttribute("questionNumber", questionNumber + 1);
         loadQuestion(questionNumber + 1);
     }
 
     if(questionNumber == questions.length - 2) {
-        document.querySelector("#next").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed!")
-    }
-
-    document.querySelector("#previous").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed!")
-    
-
+        document.querySelector("#next").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed")
+        document.querySelector("#next").disabled = true;
+    }    
 }
 
-
 function previousQuestion() {
-    document.querySelector("#next").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed!")
+
     const questionContainer = document.querySelector("#questionContainer");
     const questionNumber = parseInt(questionContainer.getAttribute("questionNumber"));
 
-
-    if(questionNumber >= 1) {
-        loadQuestion(questionNumber - 1);
-        questionContainer.setAttribute("questionNumber", questionNumber - 1);
+    const prevQuestionIndex = questionNumber - 1;
+    
+    if(questionNumber >= 1 && !answeredQIndexes.has(prevQuestionIndex)) {
+        loadQuestion(prevQuestionIndex);
+        questionContainer.setAttribute("questionNumber", prevQuestionIndex);
     }
 
-    if(questionNumber == 1) {
-        document.querySelector("#previous").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed!");
+    if(questionNumber <= 1 || answeredQIndexes.has(questionNumber - 1)) {
+        document.querySelector("#previous").classList.add("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+        document.querySelector("#previous").disabled = true;
     }
+
+    document.querySelector("#next").classList.remove("border-gray-200", "bg-gray-200", "text-gray-600", "cursor-not-allowed");
+    document.querySelector("#next").disabled = false;
 }
 
 
