@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-purple-400 via-pink-300 to-yellow-200 min-h-screen flex items-center justify-center">
+
+    <div class="grid md:grid-cols-3 grid-cols-1 w-full max-w-6xl gap-6 ">
+        <!-- Saat Bilgileri -->
+        <div class="bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-xl text-white text-center">
+            <h2 class="text-xl font-semibold mb-2">Saat</h2>
+            <div id="clock" class="text-4xl font-bold">--:--</div>
+            <div id="date" class="mt-2 text-sm">-- -- ----</div>
+        </div>
+        
+        <!-- Hava Durumu -->
+        <div class="bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-xl text-white text-center">
+            <h2 class="text-xl font-semibold mb-2">Hava Durumu</h2>
+            <div id="city" class="text-3xl">⛅ İzmir</div>
+            <div id="temperature" class="text-2xl">20°C</div> 
+            <div id="description" class="text-sm">Açık</div>           
+        </div>
+
+        <!-- Yapılacaklar Listesi -->
+        <div class="bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-xl text-white text-center">
+            <h2 class="text-xl font-semibold mb-2">Yapılacaklar</h2>
+            <ul id="todo-list" class="space-y-2 mb-4"></ul>
+            <div class="flex gap-2">
+                <input type="text" id="todo-input" placeholder="Yeni görev.." class="flex-1 px-3 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white/50">
+                <button onclick="addTodo()" class="bg-white text-purple-600 font-bold px-4 py-2 rounded-xl hover:bg-purple-100 cursor-pointer">Ekle</button>
+            </div>
+        </div>
     
+    </div>    
+    
+
+    <script src="js/script.js"></script>
 </body>
 </html>
