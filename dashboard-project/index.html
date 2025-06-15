@@ -19,17 +19,21 @@
         <!-- Hava Durumu -->
         <div class="bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-xl text-white text-center">
             <h2 class="text-xl font-semibold mb-2">Hava Durumu</h2>
-            <div id="city" class="text-3xl">⛅ İzmir</div>
-            <div id="temperature" class="text-2xl">20°C</div> 
-            <div id="description" class="text-sm">Açık</div>           
+            <div id="city" class="text-3xl flex items-center justify-center">
+                <img src="" alt="Hava Durumu">
+                <span></span>
+            </div>
+            <div id="temperature" class="text-2xl"></div> 
+            <div id="description" class="text-sm capitalize"></div>           
         </div>
 
         <!-- Yapılacaklar Listesi -->
         <div class="bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-xl text-white text-center">
             <h2 class="text-xl font-semibold mb-2">Yapılacaklar</h2>
             <ul id="todo-list" class="space-y-2 mb-4"></ul>
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
                 <input type="text" id="todo-input" placeholder="Yeni görev.." class="flex-1 px-3 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white/50">
+                <span onclick="startListening()" class="border-2 bg-white/30 cursor-pointer hover:bg-purple-100 border-white/50 rounded-full p-1 ">🎤</span>
                 <button onclick="addTodo()" class="bg-white text-purple-600 font-bold px-4 py-2 rounded-xl hover:bg-purple-100 cursor-pointer">Ekle</button>
             </div>
         </div>

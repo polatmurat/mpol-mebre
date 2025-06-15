@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sesle Kontrol Et!</title>
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        transition: background-color 0.5s, font-size 0.3s;
+        font-size: 16px;
+        text-align: center;
+        padding: 50px;
+        font-family: sans-serif;
+      }
+
+      button {
+        padding: 15px 25px;
+        font-size: 28px;
+        margin-top: 15px;
+      }
+
+      #output {
+        margin-top: 20px;
+        font-weight: bold;
+        font-style: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎤 Sesli Sayfa Kontrolü</h1>
+    <button onclick="startListening()">Start Listening</button>
+    <div id="output">Komut Bekleniyor..</div>
+
+    <script>
+      const output = document.querySelector("#output");
+
+      function startListening() {
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+          alert("Tarayıcınız Web Speech API desteklemiyor.");
+          return;
+        }
+
+        const recognition = new SpeechRecognition();
+
+        recognition.lang = "tr-TR";
+        recognition.start();
+
+        recognition.onresult = function (event) {
+          console.log(event);
+
+          const command = event.results[0][0].transcript.toLowerCase();
+          output.innerHTML = `Komut : ${command}`;
+          if (command.includes("kırmızı"))
+            document.body.style.backgroundColor = "crimson";
+          else if (command.includes("yeşil"))
+            document.body.style.backgroundColor = "green";
+          else if (command.includes("mavi"))
+            document.body.style.backgroundColor = "dodgerblue";
+          else if (command.includes("beyaz"))
+            document.body.style.backgroundColor = "white";
+          else if (command.includes("büyüt"))
+            document.body.style.fontSize = "24px";
+          else if (command.includes("küçük"))
+            document.body.style.fontSize = "14px";
+          else output.innerHTML += " (Anlaşılamadı.)";
+        };
+
+        recognition.onerror = function () {
+          output.innerHTML = "Hata: Ses algılanamadı.";
+        };
+      }
+    
+    
+    </script>
+  </body>
+</html>
