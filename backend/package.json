@@ -10,10 +10,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "fs": "^0.0.1-security",
+    "mongodb": "^6.17.0",
     "nodemon": "^3.1.10"
   }
 }
